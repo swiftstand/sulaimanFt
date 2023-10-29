@@ -1,0 +1,78 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Monitor Traders</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">s/n</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">user</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Funds</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Balance</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start-Date</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Last-trade</th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in obj_list %}
+                <tr>
+                  <td></td>
+                  <td>
+                    <h4 class="mb-0 text-sm">{{item.serial}}</h4>
+                  </td>
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{item.info.username}}</h6>
+                        <p class="text-xs text-secondary mb-0"> {{item.info.email}} </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h4 class="text-xs font-weight-bold mb-0">$ {{item.fund}}</h4>
+                  </td>
+                  <td>
+                    <h4 class="text-xs font-weight-bold mb-0">$ {{item.balance}}</h4>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <span class="badge badge-sm bg-gradient-{{item.s_code}}">{{item.status}}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{% if item.start %}{{item.start}} {% else %} - {% endif %}</span>
+                  </td>
+                  <td class="align-middle">
+                    <h5 class="font-weight-bolder mb-0">
+                      {% if item.recent.recent_profit %}
+                        <span class="text-success text-sm font-weight-bolder">{% if item.recent.recent_diff %} {{item.recent.recent_diff}} {% else %} - {% endif %}</span>
+                      {% else %}
+                        <span class="text-danger text-sm font-weight-bolder">{% if item.recent.recent_diff %} {{item.recent.recent_diff}} {% else %} - {% endif %}</span>
+                      {% endif %}
+                    </h5>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    {% include "includes/footer.html" %}
+    
+  </div>
+  {% endblock content %}
