@@ -23,7 +23,7 @@ class DashboardLogic():
 
             if portfolio_user.is_superuser:
                 continue
-            
+
             user_info = {
                 "username": portfolio_user.username,
                 "email": portfolio_user.email
@@ -83,10 +83,10 @@ class DashboardLogic():
                 recent_trade_difference = round(recent_amount - second_amount, 2)
 
                 if recent_trade_difference > 0:
-                    recent_trade_infos["recent_diff"] = f"+{recent_trade_difference}"
+                    recent_trade_infos["recent_diff"] = f"+${recent_trade_difference}"
                     recent_trade_infos["recent_profit"] = True
                 else:
-                    recent_trade_infos["recent_diff"] = f"{recent_trade_difference}"
+                    recent_trade_infos["recent_diff"] = f"-${abs(recent_trade_difference)}"
                     recent_trade_infos["recent_profit"] = False
                 
                 recent_trade_infos["recent_per"] = TradeLogic().calculate_margin_percentage(second_amount, recent_amount)
@@ -99,10 +99,10 @@ class DashboardLogic():
 
                 if difference > 0:
                     profit = True
-                    diff = f"+{difference}"
+                    diff = f"+${difference}"
                 else:
                     profit = False
-                    diff= f"{difference}"
+                    diff= f"-${abs(difference)}"
                 
                 recent_trade_infos["recent_profit"] = profit
                 recent_trade_infos["recent_per"] = TradeLogic().calculate_margin_percentage(100, recent_amount)
@@ -124,10 +124,10 @@ class DashboardLogic():
         difference = round(context["amount"] - 100, 2)
         if difference > 0:
             context["profit"] = True
-            context["diff"] = f"+{difference}"
+            context["diff"] = f"+${difference}"
         else:
             context["profit"] = False
-            context["diff"] = f"{difference}"
+            context["diff"] = f"-${abs(difference)}"
 
         trade_list = user_trades.order_by("-id")
         # resolving contexts for most recent trade
@@ -149,7 +149,7 @@ class DashboardLogic():
                     recent_trade_infos["recent_diff"] = f"+{recent_trade_difference}"
                     recent_trade_infos["recent_profit"] = True
                 else:
-                    recent_trade_infos["recent_diff"] = f"{recent_trade_difference}"
+                    recent_trade_infos["recent_diff"] = f"-${abs(recent_trade_difference)}"
                     recent_trade_infos["recent_profit"] = False
                 
                 recent_trade_infos["recent_per"] = TradeLogic().calculate_margin_percentage(second_amount, recent_amount)
@@ -160,7 +160,7 @@ class DashboardLogic():
                 recent_trade_infos["recent_diff"] = context["diff"]
                 recent_trade_infos["recent_profit"] = context["profit"]
                 recent_trade_infos["recent_per"] = context["percent"]
-
+            print(recent_trade_infos)
             context["recent_infos"] = recent_trade_infos
 
         context["profit_axis"], context["loss_axis"], context["profit_array"] , context["loss_array"] = prepare_trade_graph(trade_list)

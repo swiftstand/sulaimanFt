@@ -81,9 +81,9 @@ class TradeLogic():
         percentage_diff = round((diff*100)/start_amount, 2)
 
         if is_profit:
-            return f"+${percentage_diff}"
+            return f"+{percentage_diff}"
         else:
-            return f"-${percentage_diff}"
+            return f"-{percentage_diff}"
 
     def  __generate_closing_date(self, start_date):
         random_minutes = random.randint(1, 100) 
