@@ -4,9 +4,7 @@ from trade.logics import TradeLogic
 from datetime import datetime
 from django.contrib.auth .models import User
 import json
-
 from utils.prepare_trade_graph import prepare_trade_graph
-
 
 
 class DashboardLogic():
